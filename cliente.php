@@ -13,23 +13,33 @@
             <h1>Cat Facts</h1>
         </header>
         <main>
-            <?php
-                // URL de la API de Cat Facts
-                $api_url = 'https://catfact.ninja/fact';
-
-                // Obtiene el contenido JSON desde la API
-                $json_data = file_get_contents($api_url);
-
-                // Decodifica el JSON
-                $data = json_decode($json_data, true);
-
+            <?php             
+            /**
+            * Obtiene un hecho aleatorio sobre gatos desde la API de Cat Facts.
+            *
+            * @param string $api_url La URL de la API de Cat Facts.
+            * @return array Un array asociativo que contiene el hecho sobre gatos.
+            */
+            function getCatFactPHP($api_url) {
+            // Obtiene el contenido JSON desde la API
+            $json_data = file_get_contents($api_url);
+            // Decodifica el JSON
+            return json_decode($json_data, true);
+            }
+            // URL de la API de Cat Facts
+            $api_url = 'https://catfact.ninja/fact';
+        
+            // Obtiene el hecho inicial
+            $data = getCatFactPHP($api_url);
+            
+            // Muestra el hecho inicial
+            echo '<p id="catFact">' . $data['fact'] . '</p>';
             ?>
-            <p id="catFact"></p>
             <button onclick="getCatFact()">New data</button>
         </main>
     </div>
     <script>
-        function getCatFact() {
+            function getCatFact() {
             // Realiza una solicitud AJAX utilizando JavaScript
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
